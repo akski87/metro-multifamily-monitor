@@ -1,5 +1,7 @@
 # Metro Multifamily Market Monitor
 
+**Live site:** [https://akski87.github.io/metro-multifamily-monitor/](https://akski87.github.io/metro-multifamily-monitor/)
+
 Multi-market Class A multifamily rental dashboard for the NJ / NYC metro.
 
 - **Portfolio overview** across parent markets and submarkets  
@@ -15,6 +17,13 @@ npm install
 npm run dev        # http://localhost:8080
 npm run build
 npm run typecheck
+```
+
+## Deploy (GitHub Pages)
+
+```bash
+npm run build:gh-pages   # writes dist-gh/
+# Push dist-gh to the gh-pages branch, or use the Actions workflow on main
 ```
 
 ## Adding markets
@@ -35,4 +44,5 @@ React 19 · TypeScript · Vite · TanStack Start/Router · Tailwind v4 · Rechar
 
 ## Related
 
-Live Journal Square data source: [journal-square-monitor](https://akski87.github.io/journal-square-monitor/)
+- Repo: [akski87/metro-multifamily-monitor](https://github.com/akski87/metro-multifamily-monitor)  
+- Live Journal Square data source: [journal-square-monitor](https://akski87.github.io/journal-square-monitor/)
