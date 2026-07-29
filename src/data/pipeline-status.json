@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-07-29T03:10:14.770Z",
+  "updated_at": "2026-07-29T15:19:00.294Z",
   "markets": {
     "journal-square": {
       "id": "journal-square",
       "name": "Journal Square",
       "live": true,
-      "as_of": "2026-07-28",
-      "generated_at": "2026-07-28T13:21:51+00:00",
+      "as_of": "2026-07-29",
+      "generated_at": "2026-07-29T13:25:38+00:00",
       "buildings": 13,
-      "available": 219,
+      "available": 228,
       "source": "https://akski87.github.io/journal-square-monitor/dashboard_data.json",
       "method": "upstream-sync",
       "upstream": "https://akski87.github.io/journal-square-monitor/dashboard_data.json",
       "scraper_repo": "https://github.com/akski87/journal-square-monitor",
-      "last_sync_at": "2026-07-29T03:10:14.769Z",
+      "last_sync_at": "2026-07-29T15:19:00.294Z",
       "warnings": [
-        "Orchard: no listings captured on 2026-07-28 (last seen 2026-07-24) — excluded from current averages; site may have been unreachable or empty (check the Actions log)."
+        "Orchard: no listings captured on 2026-07-29 (last seen 2026-07-24) — excluded from current averages; site may have been unreachable or empty (check the Actions log)."
       ],
       "errors": []
     }
