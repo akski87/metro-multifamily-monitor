@@ -1,0 +1,79 @@
+name: Daily rent data sync
+
+on:
+  schedule:
+    # After journal-square-monitor daily pull (11:43 UTC)
+    - cron: "15 13 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: daily-data-sync
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    outputs:
+      should_deploy: ${{ steps.flags.outputs.should_deploy }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Sync Journal Square feed + multi-market scrapers
+        run: npm run scrape:all
+
+      - name: Commit data if changed
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/submarket-*.json src/data/pipeline-status.json
+          if git diff --staged --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No data changes."
+          else
+            git commit -m "Daily rent sync $(date -u +%F)"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Decide deploy
+        id: flags
+        run: |
+          if [ "${{ steps.commit.outputs.changed }}" = "true" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "should_deploy=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_deploy=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build static site
+        if: steps.flags.outputs.should_deploy == 'true'
+        run: npm run build:gh-pages
+
+      - name: Upload Pages artifact
+        if: steps.flags.outputs.should_deploy == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist-gh
+
+  deploy:
+    needs: sync
+    if: needs.sync.outputs.should_deploy == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

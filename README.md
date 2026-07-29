@@ -19,6 +19,16 @@ npm run build
 npm run typecheck
 ```
 
+## Automated rent data
+
+```bash
+npm run scrape:sync     # pull latest Journal Square feed
+npm run scrape:status   # last run per market
+npm run scrape:all      # sync + multi-market scrapers
+```
+
+Journal Square is scraped by [journal-square-monitor](https://github.com/akski87/journal-square-monitor); this repo syncs that feed daily. Multi-market targets live in `scripts/scrape/registry.json`.
+
 ## Deploy (GitHub Pages)
 
 ```bash

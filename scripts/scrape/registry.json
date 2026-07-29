@@ -1,0 +1,55 @@
+{
+  "_meta": {
+    "purpose": "Multi-market availability source registry for automated rent scrapes. Each submarket lists buildings with a URL + extraction method. Journal Square is synced from the dedicated upstream pipeline rather than re-scraped here.",
+    "methods": {
+      "upstream_sync": "Pull a pre-built dashboard feed (journal-square-monitor).",
+      "sightmap_api": "GET SightMap JSON API (same-origin embed token → API path).",
+      "rose_widget": "Playwright DOM extract on availability.rosenyc.com widget.",
+      "modern_spaces": "Playwright DOM extract on newdev.modernspacesnyc.com frame.",
+      "dom_read": "Playwright evaluate against marketing-site availability page.",
+      "manual_json": "Operator pastes unit rows; no live fetch."
+    }
+  },
+  "submarkets": [
+    {
+      "id": "journal-square",
+      "name": "Journal Square",
+      "market_id": "hudson-county",
+      "city": "Jersey City",
+      "state": "NJ",
+      "live": true,
+      "mode": "upstream_sync",
+      "upstream": {
+        "url": "https://akski87.github.io/journal-square-monitor/dashboard_data.json",
+        "scraper_repo": "https://github.com/akski87/journal-square-monitor",
+        "schedule": "Daily ~7:43am ET via journal-square-monitor Actions"
+      },
+      "notes": "Do not re-scrape here — the upstream Playwright extractors are the source of truth (13 buildings). Use sync-journal-square.mjs."
+    },
+    {
+      "id": "downtown-jc",
+      "name": "Downtown Jersey City",
+      "market_id": "hudson-county",
+      "city": "Jersey City",
+      "state": "NJ",
+      "live": false,
+      "mode": "scrape",
+      "center": [40.7178, -74.0431],
+      "buildings": [
+        {
+          "id": "example_sightmap",
+          "name": "Example SightMap building (template)",
+          "units": 0,
+          "address": "",
+          "lat": null,
+          "lng": null,
+          "method": "sightmap_api",
+          "enabled": false,
+          "url": "https://sightmap.com/embed/TOKEN",
+          "api_endpoint": "https://sightmap.com/app/api/v1/ORG/sightmaps/ID",
+          "notes": "Copy this template; set enabled:true + real SightMap API path when onboarding a Downtown JC comp."
+        }
+      ]
+    }
+  ]
+}

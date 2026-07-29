@@ -15,7 +15,11 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "build:gh-pages": "vite build --config vite.spa.config.ts && node scripts/gh-pages-postbuild.mjs"
+    "build:gh-pages": "vite build --config vite.spa.config.ts && node scripts/gh-pages-postbuild.mjs",
+    "scrape:sync": "node scripts/scrape/sync-journal-square.mjs",
+    "scrape:status": "node scripts/scrape/run.mjs status",
+    "scrape:run": "node scripts/scrape/run.mjs scrape",
+    "scrape:all": "node scripts/scrape/run.mjs all"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.3",

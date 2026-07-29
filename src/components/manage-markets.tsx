@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SectionHeader } from "@/components/section-header";
+import { PipelinePanel } from "@/components/pipeline-panel";
 import {
   Select,
   SelectContent,
@@ -60,7 +61,8 @@ export function ManageMarkets() {
           Grow the portfolio without touching code. Add a parent market, then a
           submarket with demo comps — or paste full survey JSON. Custom entries
           save in this browser and show up in Portfolio, Compare, and the
-          sidebar immediately.
+          sidebar immediately. Live Journal Square data refreshes via the
+          automated scrape pipeline below.
         </p>
       </div>
 
@@ -81,6 +83,8 @@ export function ManageMarkets() {
           hint="Drop submarket-*.json in data/"
         />
       </div>
+
+      <PipelinePanel />
 
       <section className="panel p-4 sm:p-6">
         <SectionHeader

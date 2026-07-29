@@ -12,6 +12,7 @@ Open **Add markets** in the sidebar (or header).
 | **Submarket** | Generates demo comps or an empty shell under a parent |
 | **Import JSON** | Pastes / uploads full survey payloads |
 | **Export pack** | Downloads your custom markets for backup or commit |
+| **Pipeline panel** | Shows last automated rent sync status |
 
 Custom entries are stored in this browser and appear in Portfolio, Compare, and the sidebar immediately.
 
@@ -40,28 +41,32 @@ No code registration. Auto-discovery:
   "city": "Fort Lee",
   "state": "NJ",
   "as_of": "2026-07-28",
-  "generated_at": "2026-07-28T12:00:00Z",
-  "live": false,
-  "center": [40.8509, -73.9701],
+  "generated_at": "2026-07-28T00:00:00Z",
+  "live": true,
+  "center": [40.85, -73.97],
   "buildings": [],
   "market_history": [],
   "avg_unit_sf": [],
   "data_quality": {
-    "checked_at": "2026-07-28T12:00:00Z",
+    "checked_at": "2026-07-28T00:00:00Z",
     "errors": [],
     "warnings": [],
     "quarantined_units": 0,
     "policy": ""
   },
-  "description": "…"
+  "description": ""
 }
 ```
 
-Every file matching `submarket-*.json` is loaded automatically via `import.meta.glob`.
-The portfolio index is derived from buildings + history — do not hand-edit a separate markets index.
+Files matching `submarket-*.json` are auto-loaded.
 
-## Submarket JSON shape
+## 3. Automated rent scraping
 
-Matches the Journal Square export: `buildings[]` with `by_type`, `history`, concessions, lat/lng, plus top-level `market_history`.
+See **[scripts/scrape/README.md](../../scripts/scrape/README.md)**.
 
-Tip: generate in the UI → **Export pack** → rename a submarket entry to `submarket-<id>.json` → commit.
+| Market | How data stays fresh |
+| --- | --- |
+| **Journal Square** | Upstream daily scrape in `journal-square-monitor` → `npm run scrape:sync` pulls the public feed |
+| **Other live markets** | Add buildings to `scripts/scrape/registry.json` with a supported method (`sightmap_api`, …) |
+
+Daily GitHub Action: `.github/workflows/daily-data-sync.yml` (sync → commit → redeploy Pages).
