@@ -1,0 +1,613 @@
+{
+  "as_of": "2026-07-28",
+  "markets": [
+    {
+      "id": "hudson-county",
+      "name": "Hudson County",
+      "region": "Northern New Jersey",
+      "state": "NJ",
+      "submarket_ids": [
+        "journal-square",
+        "downtown-jc",
+        "hoboken",
+        "powerhouse",
+        "west-side-jc"
+      ]
+    },
+    {
+      "id": "manhattan",
+      "name": "Manhattan",
+      "region": "New York City",
+      "state": "NY",
+      "submarket_ids": [
+        "fi-di",
+        "chelsea-hy",
+        "uws",
+        "midtown-east"
+      ]
+    },
+    {
+      "id": "brooklyn",
+      "name": "Brooklyn",
+      "region": "New York City",
+      "state": "NY",
+      "submarket_ids": [
+        "downtown-bk",
+        "williamsburg",
+        "dumbo"
+      ]
+    },
+    {
+      "id": "queens",
+      "name": "Queens",
+      "region": "New York City",
+      "state": "NY",
+      "submarket_ids": [
+        "lic",
+        "astoria"
+      ]
+    }
+  ],
+  "submarkets": [
+    {
+      "id": "journal-square",
+      "name": "Journal Square",
+      "market_id": "hudson-county",
+      "market_name": "Hudson County",
+      "city": "Jersey City",
+      "state": "NJ",
+      "live": true,
+      "building_count": 13,
+      "total_units": 6768,
+      "available": 219,
+      "avail_pct": 3.24,
+      "asking_avg": 3838.0,
+      "net_avg": 3635.0,
+      "concession_avg": 9.5,
+      "psf_avg": 70.6,
+      "center": [
+        40.7315,
+        -74.0625
+      ],
+      "by_type": {
+        "1BR": {
+          "asking": 3773.0,
+          "net": 3551.0
+        },
+        "2BR": {
+          "asking": 5395.0,
+          "net": 5405.0
+        },
+        "3BR": {
+          "asking": 6756.0,
+          "net": 6099.0
+        },
+        "Studio": {
+          "asking": 3096.0,
+          "net": 2921.0
+        }
+      },
+      "trend_7d_ask": 0.66
+    },
+    {
+      "id": "downtown-jc",
+      "name": "Downtown / Newport",
+      "market_id": "hudson-county",
+      "market_name": "Hudson County",
+      "city": "Jersey City",
+      "state": "NJ",
+      "live": false,
+      "building_count": 10,
+      "total_units": 4539,
+      "available": 152,
+      "avail_pct": 3.35,
+      "asking_avg": 4735,
+      "net_avg": 4533,
+      "concession_avg": 6.1,
+      "psf_avg": 74.5,
+      "center": [
+        40.7185,
+        -74.036
+      ],
+      "by_type": {
+        "Studio": {
+          "asking": 3835,
+          "net": 3672
+        },
+        "1BR": {
+          "asking": 4640,
+          "net": 4442
+        },
+        "2BR": {
+          "asking": 6629,
+          "net": 6346
+        },
+        "3BR": {
+          "asking": 8333,
+          "net": 7978
+        }
+      },
+      "trend_7d_ask": 1.13
+    },
+    {
+      "id": "hoboken",
+      "name": "Hoboken",
+      "market_id": "hudson-county",
+      "market_name": "Hudson County",
+      "city": "Hoboken",
+      "state": "NJ",
+      "live": false,
+      "building_count": 9,
+      "total_units": 2916,
+      "available": 51,
+      "avail_pct": 1.75,
+      "asking_avg": 4939,
+      "net_avg": 4467,
+      "concession_avg": 5.2,
+      "psf_avg": 80.4,
+      "center": [
+        40.743,
+        -74.0324
+      ],
+      "by_type": {
+        "Studio": {
+          "asking": 4000,
+          "net": 3618
+        },
+        "1BR": {
+          "asking": 4840,
+          "net": 4378
+        },
+        "2BR": {
+          "asking": 6914,
+          "net": 6254
+        },
+        "3BR": {
+          "asking": 8692,
+          "net": 7862
+        }
+      },
+      "trend_7d_ask": 1.96
+    },
+    {
+      "id": "powerhouse",
+      "name": "Powerhouse Arts",
+      "market_id": "hudson-county",
+      "market_name": "Hudson County",
+      "city": "Jersey City",
+      "state": "NJ",
+      "live": false,
+      "building_count": 7,
+      "total_units": 4274,
+      "available": 169,
+      "avail_pct": 3.95,
+      "asking_avg": 5040,
+      "net_avg": 4857,
+      "concession_avg": 7.8,
+      "psf_avg": 75.9,
+      "center": [
+        40.7245,
+        -74.0405
+      ],
+      "by_type": {
+        "Studio": {
+          "asking": 4082,
+          "net": 3934
+        },
+        "1BR": {
+          "asking": 4939,
+          "net": 4760
+        },
+        "2BR": {
+          "asking": 7055,
+          "net": 6800
+        },
+        "3BR": {
+          "asking": 8870,
+          "net": 8549
+        }
+      },
+      "trend_7d_ask": 1.76
+    },
+    {
+      "id": "west-side-jc",
+      "name": "West Side Avenue",
+      "market_id": "hudson-county",
+      "market_name": "Hudson County",
+      "city": "Jersey City",
+      "state": "NJ",
+      "live": false,
+      "building_count": 6,
+      "total_units": 2978,
+      "available": 131,
+      "avail_pct": 4.4,
+      "asking_avg": 3794,
+      "net_avg": 3662,
+      "concession_avg": 11.4,
+      "psf_avg": 58.7,
+      "center": [
+        40.722,
+        -74.08
+      ],
+      "by_type": {
+        "Studio": {
+          "asking": 3073,
+          "net": 2966
+        },
+        "1BR": {
+          "asking": 3718,
+          "net": 3588
+        },
+        "2BR": {
+          "asking": 5311,
+          "net": 5126
+        },
+        "3BR": {
+          "asking": 6677,
+          "net": 6444
+        }
+      },
+      "trend_7d_ask": 0.56
+    },
+    {
+      "id": "fi-di",
+      "name": "Financial District",
+      "market_id": "manhattan",
+      "market_name": "Manhattan",
+      "city": "New York",
+      "state": "NY",
+      "live": false,
+      "building_count": 8,
+      "total_units": 5133,
+      "available": 104,
+      "avail_pct": 2.03,
+      "asking_avg": 6082,
+      "net_avg": 5899,
+      "concession_avg": 4.4,
+      "psf_avg": 95.4,
+      "center": [
+        40.7075,
+        -74.0113
+      ],
+      "by_type": {
+        "Studio": {
+          "asking": 4927,
+          "net": 4778
+        },
+        "1BR": {
+          "asking": 5961,
+          "net": 5781
+        },
+        "2BR": {
+          "asking": 8515,
+          "net": 8259
+        },
+        "3BR": {
+          "asking": 10705,
+          "net": 10383
+        }
+      },
+      "trend_7d_ask": -0.23
+    },
+    {
+      "id": "chelsea-hy",
+      "name": "Chelsea / Hudson Yards",
+      "market_id": "manhattan",
+      "market_name": "Manhattan",
+      "city": "New York",
+      "state": "NY",
+      "live": false,
+      "building_count": 7,
+      "total_units": 2494,
+      "available": 43,
+      "avail_pct": 1.72,
+      "asking_avg": 7244,
+      "net_avg": 6550,
+      "concession_avg": 3.2,
+      "psf_avg": 112.2,
+      "center": [
+        40.7536,
+        -74.0014
+      ],
+      "by_type": {
+        "Studio": {
+          "asking": 5868,
+          "net": 5306
+        },
+        "1BR": {
+          "asking": 7099,
+          "net": 6419
+        },
+        "2BR": {
+          "asking": 10142,
+          "net": 9171
+        },
+        "3BR": {
+          "asking": 12750,
+          "net": 11529
+        }
+      },
+      "trend_7d_ask": 0.42
+    },
+    {
+      "id": "uws",
+      "name": "Upper West Side",
+      "market_id": "manhattan",
+      "market_name": "Manhattan",
+      "city": "New York",
+      "state": "NY",
+      "live": false,
+      "building_count": 6,
+      "total_units": 3355,
+      "available": 61,
+      "avail_pct": 1.82,
+      "asking_avg": 5724,
+      "net_avg": 5528,
+      "concession_avg": 4.9,
+      "psf_avg": 90.0,
+      "center": [
+        40.787,
+        -73.9754
+      ],
+      "by_type": {
+        "Studio": {
+          "asking": 4636,
+          "net": 4478
+        },
+        "1BR": {
+          "asking": 5609,
+          "net": 5417
+        },
+        "2BR": {
+          "asking": 8013,
+          "net": 7739
+        },
+        "3BR": {
+          "asking": 10074,
+          "net": 9729
+        }
+      },
+      "trend_7d_ask": 0.26
+    },
+    {
+      "id": "midtown-east",
+      "name": "Midtown East",
+      "market_id": "manhattan",
+      "market_name": "Manhattan",
+      "city": "New York",
+      "state": "NY",
+      "live": false,
+      "building_count": 6,
+      "total_units": 3591,
+      "available": 69,
+      "avail_pct": 1.92,
+      "asking_avg": 6316,
+      "net_avg": 6117,
+      "concession_avg": 4.1,
+      "psf_avg": 99.9,
+      "center": [
+        40.7549,
+        -73.9707
+      ],
+      "by_type": {
+        "Studio": {
+          "asking": 5116,
+          "net": 4954
+        },
+        "1BR": {
+          "asking": 6189,
+          "net": 5994
+        },
+        "2BR": {
+          "asking": 8842,
+          "net": 8563
+        },
+        "3BR": {
+          "asking": 11115,
+          "net": 10765
+        }
+      },
+      "trend_7d_ask": -0.35
+    },
+    {
+      "id": "downtown-bk",
+      "name": "Downtown Brooklyn",
+      "market_id": "brooklyn",
+      "market_name": "Brooklyn",
+      "city": "Brooklyn",
+      "state": "NY",
+      "live": false,
+      "building_count": 8,
+      "total_units": 3031,
+      "available": 92,
+      "avail_pct": 3.04,
+      "asking_avg": 5166,
+      "net_avg": 4872,
+      "concession_avg": 5.4,
+      "psf_avg": 78.9,
+      "center": [
+        40.693,
+        -73.987
+      ],
+      "by_type": {
+        "Studio": {
+          "asking": 4184,
+          "net": 3947
+        },
+        "1BR": {
+          "asking": 5062,
+          "net": 4775
+        },
+        "2BR": {
+          "asking": 7232,
+          "net": 6821
+        },
+        "3BR": {
+          "asking": 9091,
+          "net": 8575
+        }
+      },
+      "trend_7d_ask": 0.06
+    },
+    {
+      "id": "williamsburg",
+      "name": "Williamsburg",
+      "market_id": "brooklyn",
+      "market_name": "Brooklyn",
+      "city": "Brooklyn",
+      "state": "NY",
+      "live": false,
+      "building_count": 8,
+      "total_units": 5988,
+      "available": 177,
+      "avail_pct": 2.96,
+      "asking_avg": 5492,
+      "net_avg": 5186,
+      "concession_avg": 5.3,
+      "psf_avg": 84.3,
+      "center": [
+        40.7145,
+        -73.961
+      ],
+      "by_type": {
+        "Studio": {
+          "asking": 4449,
+          "net": 4200
+        },
+        "1BR": {
+          "asking": 5383,
+          "net": 5082
+        },
+        "2BR": {
+          "asking": 7689,
+          "net": 7260
+        },
+        "3BR": {
+          "asking": 9667,
+          "net": 9127
+        }
+      },
+      "trend_7d_ask": 0.42
+    },
+    {
+      "id": "dumbo",
+      "name": "DUMBO / Brooklyn Heights",
+      "market_id": "brooklyn",
+      "market_name": "Brooklyn",
+      "city": "Brooklyn",
+      "state": "NY",
+      "live": false,
+      "building_count": 5,
+      "total_units": 1807,
+      "available": 44,
+      "avail_pct": 2.43,
+      "asking_avg": 6360,
+      "net_avg": 5904,
+      "concession_avg": 2.1,
+      "psf_avg": 105.0,
+      "center": [
+        40.7033,
+        -73.9881
+      ],
+      "by_type": {
+        "Studio": {
+          "asking": 5152,
+          "net": 4782
+        },
+        "1BR": {
+          "asking": 6233,
+          "net": 5786
+        },
+        "2BR": {
+          "asking": 8904,
+          "net": 8266
+        },
+        "3BR": {
+          "asking": 11194,
+          "net": 10391
+        }
+      },
+      "trend_7d_ask": 0.35
+    },
+    {
+      "id": "lic",
+      "name": "Long Island City",
+      "market_id": "queens",
+      "market_name": "Queens",
+      "city": "Queens",
+      "state": "NY",
+      "live": false,
+      "building_count": 9,
+      "total_units": 3268,
+      "available": 143,
+      "avail_pct": 4.38,
+      "asking_avg": 5015,
+      "net_avg": 4533,
+      "concession_avg": 8.7,
+      "psf_avg": 79.9,
+      "center": [
+        40.7447,
+        -73.9485
+      ],
+      "by_type": {
+        "Studio": {
+          "asking": 4062,
+          "net": 3672
+        },
+        "1BR": {
+          "asking": 4914,
+          "net": 4442
+        },
+        "2BR": {
+          "asking": 7020,
+          "net": 6346
+        },
+        "3BR": {
+          "asking": 8826,
+          "net": 7978
+        }
+      },
+      "trend_7d_ask": 1.27
+    },
+    {
+      "id": "astoria",
+      "name": "Astoria",
+      "market_id": "queens",
+      "market_name": "Queens",
+      "city": "Queens",
+      "state": "NY",
+      "live": false,
+      "building_count": 6,
+      "total_units": 3067,
+      "available": 144,
+      "avail_pct": 4.7,
+      "asking_avg": 3971,
+      "net_avg": 3584,
+      "concession_avg": 8.7,
+      "psf_avg": 63.7,
+      "center": [
+        40.7644,
+        -73.9235
+      ],
+      "by_type": {
+        "Studio": {
+          "asking": 3217,
+          "net": 2903
+        },
+        "1BR": {
+          "asking": 3892,
+          "net": 3513
+        },
+        "2BR": {
+          "asking": 5559,
+          "net": 5018
+        },
+        "3BR": {
+          "asking": 6989,
+          "net": 6308
+        }
+      },
+      "trend_7d_ask": 1.72
+    }
+  ]
+}

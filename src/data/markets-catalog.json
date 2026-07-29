@@ -1,0 +1,29 @@
+{
+  "as_of": "2026-07-28",
+  "markets": [
+    {
+      "id": "hudson-county",
+      "name": "Hudson County",
+      "region": "Northern New Jersey",
+      "state": "NJ"
+    },
+    {
+      "id": "manhattan",
+      "name": "Manhattan",
+      "region": "New York City",
+      "state": "NY"
+    },
+    {
+      "id": "brooklyn",
+      "name": "Brooklyn",
+      "region": "New York City",
+      "state": "NY"
+    },
+    {
+      "id": "queens",
+      "name": "Queens",
+      "region": "New York City",
+      "state": "NY"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+node_modules
+.vercel
+dist
+.output
+.nitro
+.tanstack
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+screenshots
+artifacts
+tmp
+/tmp
+*.local
+.cache
+
+# App-builder sandbox artifacts (not part of the product)
+.grok
+.vendor
+vendor
+.node_modules.lock
+AGENTS.md
