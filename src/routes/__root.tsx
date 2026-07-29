@@ -9,6 +9,10 @@ import appCss from "@/styles.css?url";
 import { AppShell } from "@/components/app-shell";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
+/** True for the static GitHub Pages SPA build (client mount into #root). */
+const isSpaShell =
+  typeof document !== "undefined" && !!document.getElementById("root");
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -34,29 +38,40 @@ export const Route = createRootRoute({
   component: RootComponent,
 });
 
+function AppTree() {
+  return (
+    <TooltipProvider delayDuration={200}>
+      <AppShell>
+        <Outlet />
+      </AppShell>
+      <Toaster
+        theme="dark"
+        position="bottom-right"
+        toastOptions={{
+          classNames: {
+            toast: "bg-bg-elevated border border-border text-fg shadow-lg",
+            description: "text-fg-muted",
+          },
+        }}
+      />
+    </TooltipProvider>
+  );
+}
+
 function RootComponent() {
+  // SPA (GitHub Pages): mount into #root — no document shell.
+  if (isSpaShell) {
+    return <AppTree />;
+  }
+
+  // TanStack Start SSR / dev: full HTML document.
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body>
-        <TooltipProvider delayDuration={200}>
-          <AppShell>
-            <Outlet />
-          </AppShell>
-          <Toaster
-            theme="dark"
-            position="bottom-right"
-            toastOptions={{
-              classNames: {
-                toast:
-                  "bg-bg-elevated border border-border text-fg shadow-lg",
-                description: "text-fg-muted",
-              },
-            }}
-          />
-        </TooltipProvider>
+        <AppTree />
         <Scripts />
       </body>
     </html>

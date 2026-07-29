@@ -1,5 +1,5 @@
 {
-  "name": "app-builder-workspace",
+  "name": "metro-multifamily-monitor",
   "private": true,
   "sideEffects": false,
   "type": "module",
@@ -14,7 +14,8 @@
     "preview": "vite preview --host 0.0.0.0 --port 8080",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "build:gh-pages": "vite build --config vite.spa.config.ts && node scripts/gh-pages-postbuild.mjs"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.3",
@@ -90,4 +91,3 @@
     "vite": "^8.1.0"
   }
 }
-
