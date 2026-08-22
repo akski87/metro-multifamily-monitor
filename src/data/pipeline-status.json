@@ -1,22 +1,22 @@
 {
-  "updated_at": "2026-08-21T13:57:30.248Z",
+  "updated_at": "2026-08-22T13:43:54.487Z",
   "markets": {
     "journal-square": {
       "id": "journal-square",
       "name": "Journal Square",
       "live": true,
-      "as_of": "2026-08-21",
-      "generated_at": "2026-08-21T12:03:34+00:00",
+      "as_of": "2026-08-22",
+      "generated_at": "2026-08-22T11:59:31+00:00",
       "buildings": 13,
-      "available": 220,
+      "available": 221,
       "source": "https://akski87.github.io/journal-square-monitor/dashboard_data.json",
       "method": "upstream-sync",
       "upstream": "https://akski87.github.io/journal-square-monitor/dashboard_data.json",
       "scraper_repo": "https://github.com/akski87/journal-square-monitor",
-      "last_sync_at": "2026-08-21T13:57:30.248Z",
+      "last_sync_at": "2026-08-22T13:43:54.486Z",
       "warnings": [
-        "134 Baldwin: no listings captured on 2026-08-21 (last seen 2026-08-18) — excluded from current averages; site may have been unreachable or empty (check the Actions log).",
-        "Orchard: no listings captured on 2026-08-21 (last seen 2026-07-24) — excluded from current averages; site may have been unreachable or empty (check the Actions log)."
+        "134 Baldwin: no listings captured on 2026-08-22 (last seen 2026-08-18) — excluded from current averages; site may have been unreachable or empty (check the Actions log).",
+        "Orchard: no listings captured on 2026-08-22 (last seen 2026-07-24) — excluded from current averages; site may have been unreachable or empty (check the Actions log)."
       ],
       "errors": []
     }
