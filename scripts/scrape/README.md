@@ -56,9 +56,12 @@ Schedule: `15 13 * * *` UTC (~9:15am ET), after JSQ’s `43 11 * * *` UTC job.
 }
 ```
 
-3. Supported methods today:
-   - `sightmap_api` — pure HTTP, CI-safe  
-   - (more adapters: Rose / Modern Spaces / DOM — same patterns as your JSQ `scrape.py`)
+3. Supported methods:
+   - `sightmap_api` — GET SightMap JSON. Pure HTTP, CI-safe.
+   - `rose_widget` — Playwright extract on `availability.rosenyc.com` (gross + net + SF). Set `portal_url` + `addr_pattern`.
+   - `modern_spaces` — Playwright extract on `newdev.modernspacesnyc.com` frames. Set `portal_url` + `addr_line`.
+   - `dom_read` — Playwright evaluate against a marketing-site availability page. Builtins: `journal_squared`, `urby`, `greyson`, `metrovue`. Or pass `extractor_js`.
+   - `upstream_sync` — Journal Square only. Do not re-scrape JSQ here.
 
 4. Run `npm run scrape:run` and check `src/data/submarket-<id>.json`.
 

@@ -16,6 +16,10 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { fetchSightmapUnits } from "./adapters/sightmap.mjs";
+import { fetchRoseUnits } from "./adapters/rose.mjs";
+import { fetchModernSpacesUnits } from "./adapters/modern-spaces.mjs";
+import { fetchDomUnits } from "./adapters/dom.mjs";
+import { closeBrowser } from "./adapters/browser.mjs";
 import { buildingFromUnits } from "./adapters/aggregate.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -65,11 +69,24 @@ async function scrapeBuilding(b) {
   if (b.enabled === false) {
     return { skipped: true, reason: "disabled" };
   }
-  if (b.method === "sightmap_api") {
+  const method = b.method;
+  if (method === "sightmap_api") {
     const units = await fetchSightmapUnits(b.api_endpoint);
-    return { units, method: "sightmap_api" };
+    return { units, method };
   }
-  throw new Error(`No adapter for method=${b.method} (building ${b.id})`);
+  if (method === "rose_widget") {
+    const units = await fetchRoseUnits(b);
+    return { units, method };
+  }
+  if (method === "modern_spaces") {
+    const units = await fetchModernSpacesUnits(b);
+    return { units, method };
+  }
+  if (method === "dom_read") {
+    const units = await fetchDomUnits(b);
+    return { units, method };
+  }
+  throw new Error(`No adapter for method=${method} (building ${b.id})`);
 }
 
 async function scrapeSubmarket(sm) {
@@ -279,11 +296,20 @@ async function main() {
     let id = null;
     const i = rest.indexOf("--id");
     if (i >= 0) id = rest[i + 1];
-    return cmdScrape(id);
+    try {
+      await cmdScrape(id);
+    } finally {
+      await closeBrowser();
+    }
+    return;
   }
   if (cmd === "all") {
     cmdSync();
-    await cmdScrape(null);
+    try {
+      await cmdScrape(null);
+    } finally {
+      await closeBrowser();
+    }
     return;
   }
   console.error(`Unknown command: ${cmd}`);

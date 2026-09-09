@@ -43,3 +43,15 @@ export function formatPsf(n: number | null | undefined) {
 export function clamp(n: number, min: number, max: number) {
   return Math.min(max, Math.max(min, n));
 }
+
+/** Format a YYYY-MM-DD survey date for display. */
+export function formatAsOf(isoDate: string | null | undefined) {
+  if (!isoDate) return "—";
+  const d = new Date(`${isoDate.slice(0, 10)}T12:00:00`);
+  if (Number.isNaN(d.getTime())) return isoDate;
+  return d.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}

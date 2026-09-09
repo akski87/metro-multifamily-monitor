@@ -111,6 +111,8 @@ export type SubmarketSummary = {
     Record<UnitType | string, { asking: number; net: number }>
   >;
   trend_7d_ask: number | null;
+  spark_ask: number[];
+  spark_avail: number[];
   custom?: boolean;
 };
 

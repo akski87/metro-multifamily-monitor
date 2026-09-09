@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   BedDouble,
   Building2,
@@ -11,6 +11,7 @@ import type { SubmarketData, UnitType } from "@/lib/market-types";
 import { UNIT_TYPES } from "@/lib/market-types";
 import { aggregateBuildings } from "@/lib/market-data";
 import { useMarketList } from "@/lib/market-store";
+import { useWatchlist } from "@/lib/watchlist";
 import {
   formatCurrency,
   formatNumber,
@@ -27,19 +28,36 @@ import { BuildingRentBars } from "@/components/building-rent-bars";
 import { UnitMixChart } from "@/components/unit-mix-chart";
 import { BuildingMap } from "@/components/building-map";
 import { BuildingsTable } from "@/components/buildings-table";
+import { BuildingSheet } from "@/components/building-sheet";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export function SubmarketDashboard({ data }: { data: SubmarketData }) {
+export function SubmarketDashboard({
+  data,
+  initialBuildingId,
+}: {
+  data: SubmarketData;
+  initialBuildingId?: string;
+}) {
   const markets = useMarketList();
   const market = markets.find((m) => m.id === data.market_id) ?? null;
+  const watch = useWatchlist();
   const [inMarketIds, setInMarketIds] = useState<Set<string>>(
     () =>
       new Set(
         data.buildings.filter((b) => b.in_market !== false).map((b) => b.id),
       ),
   );
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(
+    initialBuildingId ?? null,
+  );
+  const [sheetOpen, setSheetOpen] = useState(() => Boolean(initialBuildingId));
   const [unitType, setUnitType] = useState<UnitType | "All">("Studio");
+
+  useEffect(() => {
+    if (!initialBuildingId) return;
+    setSelectedId(initialBuildingId);
+    setSheetOpen(true);
+  }, [initialBuildingId]);
 
   const agg = useMemo(
     () => aggregateBuildings(data.buildings, inMarketIds),
@@ -67,7 +85,14 @@ export function SubmarketDashboard({ data }: { data: SubmarketData }) {
     });
   }
 
+  function selectBuilding(id: string) {
+    setSelectedId(id);
+    setSheetOpen(true);
+  }
+
   const allRow = agg.survey.find((r) => r.type === "All");
+  const selected = data.buildings.find((b) => b.id === selectedId) ?? null;
+  const watchedIds = useMemo(() => new Set(watch.ids), [watch.ids]);
 
   return (
     <div className="space-y-8 sm:space-y-10">
@@ -90,7 +115,7 @@ export function SubmarketDashboard({ data }: { data: SubmarketData }) {
           </h1>
           <p className="mt-1 max-w-2xl text-sm text-fg-muted">
             {data.description} Snapshot {data.as_of}. Averages use buildings
-            flagged in-market below.
+            flagged in-market below. Click a building for the full sheet.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -314,13 +339,13 @@ export function SubmarketDashboard({ data }: { data: SubmarketData }) {
           <SectionHeader
             eyebrow="06"
             title="The map"
-            description="Click a marker for a live read. Size scales with unit count."
+            description="Click a marker for the building sheet. Size scales with unit count; color tracks availability."
           />
           <BuildingMap
             buildings={data.buildings}
             inMarketIds={inMarketIds}
             selectedId={selectedId}
-            onSelect={setSelectedId}
+            onSelect={selectBuilding}
           />
         </section>
       </div>
@@ -329,7 +354,7 @@ export function SubmarketDashboard({ data }: { data: SubmarketData }) {
         <SectionHeader
           eyebrow="07"
           title="The building set"
-          description="Toggle in-market to recompute averages above. Sort any column."
+          description="Toggle in-market to recompute averages. Search, star a watchlist, or export CSV. Click a row for the sheet."
         />
         {data.buildings.length > 0 ? (
           <BuildingsTable
@@ -337,7 +362,10 @@ export function SubmarketDashboard({ data }: { data: SubmarketData }) {
             inMarketIds={inMarketIds}
             onToggle={toggleBuilding}
             selectedId={selectedId}
-            onSelect={setSelectedId}
+            onSelect={selectBuilding}
+            watchedIds={watchedIds}
+            onToggleWatch={watch.toggle}
+            exportName={data.id}
           />
         ) : (
           <div className="panel p-8 text-center text-sm text-fg-muted">
@@ -399,6 +427,16 @@ export function SubmarketDashboard({ data }: { data: SubmarketData }) {
           </ul>
         ) : null}
       </section>
+
+      <BuildingSheet
+        building={selected}
+        open={sheetOpen && Boolean(selected)}
+        onOpenChange={setSheetOpen}
+        watched={selected ? watch.has(selected.id) : false}
+        onToggleWatch={
+          selected ? () => watch.toggle(selected.id) : undefined
+        }
+      />
     </div>
   );
 }

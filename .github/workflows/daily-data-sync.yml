@@ -30,6 +30,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Install Playwright Chromium (Rose / Modern Spaces / DOM adapters)
+        run: npx playwright install --with-deps chromium
+
       - name: Sync Journal Square feed + multi-market scrapers
         run: npm run scrape:all
 

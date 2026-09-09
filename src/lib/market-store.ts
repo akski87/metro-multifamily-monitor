@@ -286,3 +286,12 @@ export function useMarketList(): MarketMeta[] {
   const customMarkets = useMarketStore((s) => s.customMarkets);
   return useMemo(() => mergeMarkets(customMarkets), [customMarkets]);
 }
+
+/** All submarket payloads (baked-in + custom). */
+export function useAllSubmarkets(): SubmarketData[] {
+  const customSubmarkets = useMarketStore((s) => s.customSubmarkets);
+  return useMemo(
+    () => Object.values(mergeSubmarkets(customSubmarkets)),
+    [customSubmarkets],
+  );
+}

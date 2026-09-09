@@ -72,6 +72,8 @@ export function buildIndex(
       center: sm.center,
       by_type: last?.by_type,
       trend_7d_ask: trend != null ? Math.round(trend * 100) / 100 : null,
+      spark_ask: sm.market_history.slice(-14).map((h) => h.all_asking ?? 0),
+      spark_avail: sm.market_history.slice(-14).map((h) => h.total_available ?? 0),
       custom: sm.custom,
     };
   });

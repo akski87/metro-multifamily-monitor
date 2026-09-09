@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   ArrowDownRight,
@@ -5,13 +6,16 @@ import {
   Building2,
   FolderPlus,
   MapPinned,
+  Star,
 } from "lucide-react";
-import { useMarketsIndex } from "@/lib/market-store";
+import { useAllSubmarkets, useMarketsIndex } from "@/lib/market-store";
+import { useWatchlist } from "@/lib/watchlist";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { KpiCard } from "@/components/kpi-card";
 import { SectionHeader } from "@/components/section-header";
 import { CompareTable } from "@/components/compare-table";
+import { Sparkline } from "@/components/sparkline";
 import {
   Bar,
   BarChart,
@@ -27,9 +31,13 @@ import {
   formatNumber,
   formatPct,
 } from "@/lib/utils";
+import { vacancyTextClass } from "@/lib/heat";
+import { buildingAskingPsf } from "@/lib/market-data";
 
 export function PortfolioView() {
   const index = useMarketsIndex();
+  const allSubs = useAllSubmarkets();
+  const watch = useWatchlist();
   const subs = index.submarkets;
   const totalUnits = subs.reduce((a, s) => a + s.total_units, 0);
   const totalAvail = subs.reduce((a, s) => a + s.available, 0);
@@ -58,6 +66,35 @@ export function PortfolioView() {
       avail: s.avail_pct,
     }));
 
+  const watchedBuildings = useMemo(() => {
+    const set = new Set(watch.ids);
+    if (!set.size) return [];
+    const out: Array<{
+      id: string;
+      name: string;
+      submarketId: string;
+      submarketName: string;
+      available: number;
+      units: number;
+      psf: number | null;
+    }> = [];
+    for (const sm of allSubs) {
+      for (const b of sm.buildings) {
+        if (!set.has(b.id)) continue;
+        out.push({
+          id: b.id,
+          name: b.name,
+          submarketId: sm.id,
+          submarketName: sm.name,
+          available: b.available_now ?? 0,
+          units: b.units,
+          psf: buildingAskingPsf(b),
+        });
+      }
+    }
+    return out;
+  }, [allSubs, watch.ids]);
+
   return (
     <div className="space-y-8 sm:space-y-10">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -74,7 +111,7 @@ export function PortfolioView() {
             <Link to="/manage" className="text-accent hover:underline">
               Add markets
             </Link>{" "}
-            to expand coverage.
+            to expand coverage. Press ⌘K to jump anywhere.
           </p>
         </div>
         <Button asChild variant="secondary" className="shrink-0 self-start">
@@ -109,6 +146,48 @@ export function PortfolioView() {
           hint="Mean of submarket averages"
         />
       </div>
+
+      {watchedBuildings.length > 0 ? (
+        <section>
+          <SectionHeader
+            title="Watchlist"
+            description="Starred buildings persist in this browser. Open a row to jump to the sheet."
+          />
+          <div className="panel overflow-hidden">
+            <ul className="divide-y divide-border">
+              {watchedBuildings.map((b) => {
+                const pct = b.units ? (b.available / b.units) * 100 : 0;
+                return (
+                  <li key={b.id}>
+                    <Link
+                      to="/market/$submarketId"
+                      params={{ submarketId: b.submarketId }}
+                      search={{ building: b.id }}
+                      className="flex items-center justify-between gap-3 px-4 py-3 text-sm transition-colors hover:bg-bg-subtle"
+                    >
+                      <span className="flex min-w-0 items-center gap-2">
+                        <Star className="h-3.5 w-3.5 shrink-0 fill-warning text-warning" />
+                        <span className="truncate font-medium">{b.name}</span>
+                        <span className="truncate text-xs text-fg-subtle">
+                          {b.submarketName}
+                        </span>
+                      </span>
+                      <span className="flex shrink-0 items-center gap-4 tabular text-xs">
+                        <span className={vacancyTextClass(pct)}>
+                          {formatNumber(b.available)} avail
+                        </span>
+                        <span className="text-fg-muted">
+                          {b.psf != null ? `$${b.psf.toFixed(1)} /SF` : "—"}
+                        </span>
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </section>
+      ) : null}
 
       <section>
         <SectionHeader
@@ -194,7 +273,10 @@ export function PortfolioView() {
                               </Badge>
                             ) : null}
                           </span>
-                          <TrendChip value={s.trend_7d_ask} />
+                          <span className="flex shrink-0 items-center gap-2">
+                            <Sparkline values={s.spark_ask ?? []} />
+                            <TrendChip value={s.trend_7d_ask} />
+                          </span>
                         </Link>
                       </li>
                     ))
@@ -221,13 +303,13 @@ export function PortfolioView() {
                   margin={{ top: 4, right: 12, left: 4, bottom: 4 }}
                 >
                   <CartesianGrid
-                    stroke="#2a2f3a"
+                    stroke="var(--color-border)"
                     strokeDasharray="3 3"
                     horizontal={false}
                   />
                   <XAxis
                     type="number"
-                    tick={{ fill: "#6b7380", fontSize: 11 }}
+                    tick={{ fill: "var(--color-fg-subtle)", fontSize: 11 }}
                     tickLine={false}
                     axisLine={false}
                     tickFormatter={(v) => `$${Math.round(v / 100) / 10}k`}
@@ -236,14 +318,14 @@ export function PortfolioView() {
                     type="category"
                     dataKey="name"
                     width={110}
-                    tick={{ fill: "#9aa3b2", fontSize: 11 }}
+                    tick={{ fill: "var(--color-fg-muted)", fontSize: 11 }}
                     tickLine={false}
                     axisLine={false}
                   />
                   <Tooltip
                     contentStyle={{
-                      background: "#12141a",
-                      border: "1px solid #2a2f3a",
+                      background: "var(--color-bg-elevated)",
+                      border: "1px solid var(--color-border)",
                       borderRadius: 12,
                       fontSize: 12,
                     }}
@@ -257,13 +339,13 @@ export function PortfolioView() {
                   />
                   <Bar
                     dataKey="asking"
-                    fill="#5b8def"
+                    fill="var(--color-chart-1)"
                     radius={[0, 4, 4, 0]}
                     maxBarSize={14}
                   />
                   <Bar
                     dataKey="net"
-                    fill="#7ec8a3"
+                    fill="var(--color-chart-2)"
                     radius={[0, 4, 4, 0]}
                     maxBarSize={14}
                   />
@@ -287,13 +369,13 @@ export function PortfolioView() {
                   margin={{ top: 4, right: 12, left: 4, bottom: 4 }}
                 >
                   <CartesianGrid
-                    stroke="#2a2f3a"
+                    stroke="var(--color-border)"
                     strokeDasharray="3 3"
                     horizontal={false}
                   />
                   <XAxis
                     type="number"
-                    tick={{ fill: "#6b7380", fontSize: 11 }}
+                    tick={{ fill: "var(--color-fg-subtle)", fontSize: 11 }}
                     tickLine={false}
                     axisLine={false}
                     tickFormatter={(v) => `${v.toFixed(0)}%`}
@@ -302,14 +384,14 @@ export function PortfolioView() {
                     type="category"
                     dataKey="name"
                     width={110}
-                    tick={{ fill: "#9aa3b2", fontSize: 11 }}
+                    tick={{ fill: "var(--color-fg-muted)", fontSize: 11 }}
                     tickLine={false}
                     axisLine={false}
                   />
                   <Tooltip
                     contentStyle={{
-                      background: "#12141a",
-                      border: "1px solid #2a2f3a",
+                      background: "var(--color-bg-elevated)",
+                      border: "1px solid var(--color-border)",
                       borderRadius: 12,
                       fontSize: 12,
                     }}
@@ -320,7 +402,7 @@ export function PortfolioView() {
                   />
                   <Bar
                     dataKey="avail"
-                    fill="#c4a57a"
+                    fill="var(--color-chart-3)"
                     radius={[0, 4, 4, 0]}
                     maxBarSize={14}
                   />

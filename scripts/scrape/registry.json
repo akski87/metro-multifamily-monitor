@@ -1,13 +1,12 @@
 {
   "_meta": {
-    "purpose": "Multi-market availability source registry for automated rent scrapes. Each submarket lists buildings with a URL + extraction method. Journal Square is synced from the dedicated upstream pipeline rather than re-scraped here.",
+    "purpose": "Multi-market availability source registry. Journal Square syncs from the dedicated upstream pipeline. Other submarkets use platform adapters ported from that scraper.",
     "methods": {
       "upstream_sync": "Pull a pre-built dashboard feed (journal-square-monitor).",
-      "sightmap_api": "GET SightMap JSON API (same-origin embed token → API path).",
-      "rose_widget": "Playwright DOM extract on availability.rosenyc.com widget.",
+      "sightmap_api": "GET SightMap JSON API — CI-safe, no browser.",
+      "rose_widget": "Playwright DOM extract on availability.rosenyc.com (gross + net + SF).",
       "modern_spaces": "Playwright DOM extract on newdev.modernspacesnyc.com frame.",
-      "dom_read": "Playwright evaluate against marketing-site availability page.",
-      "manual_json": "Operator pastes unit rows; no live fetch."
+      "dom_read": "Playwright evaluate against marketing-site availability page (builtin extractors: journal_squared, urby, greyson, metrovue)."
     }
   },
   "submarkets": [
@@ -24,7 +23,7 @@
         "scraper_repo": "https://github.com/akski87/journal-square-monitor",
         "schedule": "Daily ~7:43am ET via journal-square-monitor Actions"
       },
-      "notes": "Do not re-scrape here — the upstream Playwright extractors are the source of truth (13 buildings). Use sync-journal-square.mjs."
+      "notes": "Do not re-scrape here. Use sync-journal-square.mjs."
     },
     {
       "id": "downtown-jc",
@@ -37,8 +36,8 @@
       "center": [40.7178, -74.0431],
       "buildings": [
         {
-          "id": "example_sightmap",
-          "name": "Example SightMap building (template)",
+          "id": "dtjc_sightmap_template",
+          "name": "SightMap template",
           "units": 0,
           "address": "",
           "lat": null,
@@ -47,7 +46,48 @@
           "enabled": false,
           "url": "https://sightmap.com/embed/TOKEN",
           "api_endpoint": "https://sightmap.com/app/api/v1/ORG/sightmaps/ID",
-          "notes": "Copy this template; set enabled:true + real SightMap API path when onboarding a Downtown JC comp."
+          "notes": "Set enabled:true + real SightMap API path."
+        },
+        {
+          "id": "dtjc_rose_template",
+          "name": "Rose widget template",
+          "units": 0,
+          "address": "70 Columbus Dr",
+          "lat": null,
+          "lng": null,
+          "method": "rose_widget",
+          "enabled": false,
+          "url": "https://example.com/availability",
+          "portal_url": "https://availability.rosenyc.com/availability/TOKEN/",
+          "addr_pattern": "70 Columbus",
+          "notes": "Same extractor as 345 Baldwin / 425 Summit."
+        },
+        {
+          "id": "dtjc_ms_template",
+          "name": "Modern Spaces template",
+          "units": 0,
+          "address": "70 Greene Street",
+          "lat": null,
+          "lng": null,
+          "method": "modern_spaces",
+          "enabled": false,
+          "url": "https://example.com/availability",
+          "portal_url": "https://newdev.modernspacesnyc.com/Search/Frame?buildingId=ID",
+          "addr_line": "70 Greene Street",
+          "notes": "Same extractor as Orchard / 55 Jordan."
+        },
+        {
+          "id": "dtjc_dom_template",
+          "name": "DOM extractor template",
+          "units": 0,
+          "address": "",
+          "lat": null,
+          "lng": null,
+          "method": "dom_read",
+          "enabled": false,
+          "url": "https://example.com/availability",
+          "extractor": "journal_squared",
+          "notes": "Builtins: journal_squared | urby | greyson | metrovue. Or set extractor_js."
         }
       ]
     }

@@ -6,16 +6,19 @@ import {
   LayoutDashboard,
   MapPinned,
   Menu,
+  Search,
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { rehydrateMarketStore, useMarketsIndex } from "@/lib/market-store";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { CommandPalette, openCommandPalette } from "@/components/command-palette";
+import { cn, formatAsOf } from "@/lib/utils";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
+  const [shortcut, setShortcut] = useState("⌘K");
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const index = useMarketsIndex();
 
@@ -23,8 +26,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     void rehydrateMarketStore();
   }, []);
 
+  useEffect(() => {
+    if (typeof navigator !== "undefined" && !/Mac|iPhone|iPad/.test(navigator.platform)) {
+      setShortcut("Ctrl K");
+    }
+  }, []);
+
   return (
     <div className="min-h-dvh bg-bg text-fg">
+      <CommandPalette />
       <div className="mx-auto flex min-h-dvh max-w-[1440px]">
         <aside className="hidden w-64 shrink-0 border-r border-border bg-bg-elevated lg:flex lg:flex-col">
           <div className="border-b border-border px-5 py-5">
@@ -37,7 +47,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </h1>
             </Link>
             <p className="mt-2 text-xs text-fg-muted">
-              {index.submarkets.length} submarkets · as of {index.as_of}
+              {index.submarkets.length} submarkets · as of {formatAsOf(index.as_of)}
             </p>
           </div>
           <nav className="flex-1 overflow-y-auto scroll-thin p-3">
@@ -142,10 +152,27 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 <p className="text-[11px] text-fg-subtle">Market Monitor</p>
               </div>
             </div>
-            <div className="hidden text-sm text-fg-muted lg:block">
-              Class A rental comps across NJ / NYC metro
-            </div>
+            <button
+              type="button"
+              onClick={openCommandPalette}
+              className="hidden h-9 min-w-[220px] items-center gap-2 rounded-lg border border-border bg-bg-subtle px-3 text-sm text-fg-subtle transition-colors hover:border-border-strong hover:text-fg lg:flex"
+            >
+              <Search className="h-3.5 w-3.5" />
+              <span className="flex-1 text-left">Jump to market…</span>
+              <kbd className="rounded border border-border px-1.5 py-0.5 font-mono text-[10px]">
+                {shortcut}
+              </kbd>
+            </button>
             <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                className="lg:hidden"
+                onClick={openCommandPalette}
+                aria-label="Search"
+              >
+                <Search className="h-4 w-4" />
+              </Button>
               <Button
                 variant="secondary"
                 size="sm"
@@ -158,7 +185,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 </Link>
               </Button>
               <Badge variant="outline" className="tabular">
-                Snapshot {index.as_of}
+                Snapshot {formatAsOf(index.as_of)}
               </Badge>
             </div>
           </header>

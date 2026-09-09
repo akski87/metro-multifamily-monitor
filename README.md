@@ -5,8 +5,9 @@
 Multi-market Class A multifamily rental dashboard for the NJ / NYC metro.
 
 - **Portfolio overview** across parent markets and submarkets  
-- **Submarket deep-dive**: live survey roll-up, asking vs net-eff, trends, unit mix, map, building set with in-market toggles  
-- **Compare** view across submarkets  
+- **Submarket deep-dive**: live survey roll-up, asking vs net-eff, trends, unit mix, map, building sheet, watchlist, CSV export  
+- **Compare** view with sortable table, 14-day sparklines, and a unit-type rent heatmap  
+- **Command palette** (`⌘K` / Ctrl-K) to jump to any market or building  
 - **Add markets** from the UI (demo comps or JSON import) without code changes  
 - **Journal Square** ships with live survey snapshot data from the Journal Square Market Monitor pipeline  
 

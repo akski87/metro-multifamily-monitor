@@ -2,12 +2,21 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useSubmarket } from "@/lib/market-store";
 import { SubmarketDashboard } from "@/components/submarket-dashboard";
 
+type MarketSearch = {
+  building?: string;
+};
+
 export const Route = createFileRoute("/market/$submarketId")({
+  validateSearch: (s: Record<string, unknown>): MarketSearch => ({
+    building:
+      typeof s.building === "string" && s.building ? s.building : undefined,
+  }),
   component: MarketPage,
 });
 
 function MarketPage() {
   const { submarketId } = Route.useParams();
+  const { building } = Route.useSearch();
   const data = useSubmarket(submarketId);
   if (!data) {
     return (
@@ -20,5 +29,11 @@ function MarketPage() {
       </div>
     );
   }
-  return <SubmarketDashboard key={data.id} data={data} />;
+  return (
+    <SubmarketDashboard
+      key={data.id}
+      data={data}
+      initialBuildingId={building}
+    />
+  );
 }

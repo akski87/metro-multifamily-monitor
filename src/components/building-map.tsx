@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import type { Building } from "@/lib/market-types";
+import { vacancyFill } from "@/lib/heat";
 import { cn, formatNumber } from "@/lib/utils";
 
 export function BuildingMap({
@@ -87,15 +88,17 @@ export function BuildingMap({
         {points.map((p) => {
           const inMkt = inMarketIds.has(p.id);
           const isActive = p.id === (hover || selectedId);
+          const availPct = p.units ? ((p.available_now ?? 0) / p.units) * 100 : 0;
+          const fill = inMkt ? vacancyFill(availPct) : "var(--color-border-strong)";
           return (
             <g key={p.id}>
               <circle
                 cx={p.x}
                 cy={p.y}
                 r={(p.r / 100) * 4.5 + (isActive ? 0.4 : 0)}
-                fill={inMkt ? "#5b8def" : "#3a4150"}
-                fillOpacity={isActive ? 0.95 : inMkt ? 0.75 : 0.45}
-                stroke={isActive ? "#eef0f4" : "transparent"}
+                fill={fill}
+                fillOpacity={isActive ? 0.95 : inMkt ? 0.8 : 0.4}
+                stroke={isActive ? "var(--color-fg)" : "transparent"}
                 strokeWidth={0.35}
                 className="cursor-pointer transition-opacity"
                 onMouseEnter={() => setHover(p.id)}
@@ -118,7 +121,7 @@ export function BuildingMap({
         </div>
       ) : (
         <div className="absolute bottom-3 left-3 text-[11px] text-fg-subtle">
-          Marker size = unit count · teal = in-market
+          Marker size = unit count · color = availability (green low / amber / red high)
         </div>
       )}
     </div>
