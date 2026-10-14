@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-13T19:51:48.066Z",
+  "updated_at": "2026-10-14T18:01:08.689Z",
   "markets": {
     "journal-square": {
       "id": "journal-square",
@@ -13,7 +13,7 @@
       "method": "upstream-sync",
       "upstream": "https://akski87.github.io/journal-square-monitor/dashboard_data.json",
       "scraper_repo": "https://github.com/akski87/journal-square-monitor",
-      "last_sync_at": "2026-10-13T19:51:48.066Z",
+      "last_sync_at": "2026-10-14T18:01:08.688Z",
       "warnings": [
         "134 Baldwin: no listings captured on 2026-10-13 (last seen 2026-08-18) — excluded from current averages; site may have been unreachable or empty (check the Actions log).",
         "345 Baldwin: no listings captured on 2026-10-13 (last seen 2026-09-17) — excluded from current averages; site may have been unreachable or empty (check the Actions log).",
