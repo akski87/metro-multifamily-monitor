@@ -1,24 +1,24 @@
 {
-  "updated_at": "2026-11-09T22:59:17.800Z",
+  "updated_at": "2026-11-10T20:28:07.739Z",
   "markets": {
     "journal-square": {
       "id": "journal-square",
       "name": "Journal Square",
       "live": true,
-      "as_of": "2026-11-09",
-      "generated_at": "2026-11-09T21:40:36+00:00",
+      "as_of": "2026-11-10",
+      "generated_at": "2026-11-10T18:52:59+00:00",
       "buildings": 13,
-      "available": 231,
+      "available": 230,
       "source": "https://akski87.github.io/journal-square-monitor/dashboard_data.json",
       "method": "upstream-sync",
       "upstream": "https://akski87.github.io/journal-square-monitor/dashboard_data.json",
       "scraper_repo": "https://github.com/akski87/journal-square-monitor",
-      "last_sync_at": "2026-11-09T22:59:17.800Z",
+      "last_sync_at": "2026-11-10T20:28:07.739Z",
       "warnings": [
-        "134 Baldwin: no listings captured on 2026-11-09 (last seen 2026-08-18) — excluded from current averages; site may have been unreachable or empty (check the Actions log).",
-        "55 Jordan: no listings captured on 2026-11-09 (last seen 2026-09-01) — excluded from current averages; site may have been unreachable or empty (check the Actions log).",
-        "MetroVue: no listings captured on 2026-11-09 (last seen 2026-11-06) — excluded from current averages; site may have been unreachable or empty (check the Actions log).",
-        "Orchard: no listings captured on 2026-11-09 (last seen 2026-07-24) — excluded from current averages; site may have been unreachable or empty (check the Actions log)."
+        "134 Baldwin: no listings captured on 2026-11-10 (last seen 2026-08-18) — excluded from current averages; site may have been unreachable or empty (check the Actions log).",
+        "55 Jordan: no listings captured on 2026-11-10 (last seen 2026-09-01) — excluded from current averages; site may have been unreachable or empty (check the Actions log).",
+        "MetroVue: no listings captured on 2026-11-10 (last seen 2026-11-06) — excluded from current averages; site may have been unreachable or empty (check the Actions log).",
+        "Orchard: no listings captured on 2026-11-10 (last seen 2026-07-24) — excluded from current averages; site may have been unreachable or empty (check the Actions log)."
       ],
       "errors": []
     }
